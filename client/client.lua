@@ -396,7 +396,27 @@ Citizen.CreateThread(function()
     end
 end)
 
-
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        local sleep = true
+        local playerCoords = GetEntityCoords(PlayerPedId())
+        for k, v  in ipairs(Config.Rooms) do  
+          for k2, doorID in ipairs(v.Doors) do
+            local distance = #(playerCoords - doorID.objCoords)
+  
+            if distance < 2.0 then
+               sleep = false    
+               TriggerServerEvent("Vorp_housing:Load")
+               Citizen.Wait(10000)
+            end
+          end
+        end
+        if sleep then
+            Citizen.Wait(1000)
+        end
+    end
+  end)
 
 function DrawText3D(x, y, z, text, state)
     local onScreen, _x, _y = GetScreenCoordFromWorldCoord(x, y, z)
