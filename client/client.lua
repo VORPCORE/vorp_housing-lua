@@ -520,3 +520,4 @@ RegisterNetEvent('Vorp_housing:setStateRoom2', function(Doorinfo)
         end
     end
 end)
+--
