@@ -1,6 +1,4 @@
----------                            ---------
----------  HOUSE SYSTEM > VORP CORE  ---------
----------         ASHKAN#1946        ---------
+
 local HouseInfo = {}
 local RoomInfo = {}
 VorpInv = exports.vorp_inventory:vorp_inventoryApi()
