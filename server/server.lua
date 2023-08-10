@@ -32,23 +32,18 @@ end)
 
 -------------- load rooms ---------------
 VORPcore.addRpcCallback("Vorp_housing:getrooms", function(source, cb, args)
-	MySQL.query('SELECT * FROM rooms', {},
-		function(result)
-			if result[1] then
-				return cb(result) -- success
-			else
-				return cb(nil) -- server nil
-			end
-		end)
+	MySQL.query('SELECT * FROM rooms', {}, function(result)
+		if result then
+			return cb(result) -- success
+		end
+	end)
 end)
 
 -------- load houses ----------
 VORPcore.addRpcCallback("Vorp_housing:gethouses", function(source, cb, args)
 	MySQL.query('SELECT * FROM housing', {}, function(result)
-		if result[1] then
+		if result then
 			return cb(result) -- success
-		else
-			return cb(nil) -- server nil
 		end
 	end)
 end)
