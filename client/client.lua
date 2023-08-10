@@ -277,6 +277,7 @@ Citizen.CreateThread(function()
                     end
                 end
                 if distance < 2.0 then
+                        sleep = false
                     DrawText3D(doorID.objCoords.x, doorID.objCoords.y, doorID.objCoords.z + 0.2, " ", doorID.locked)
                     if IsControlJustPressed(2, 0xE8342FF2) then -- Hold ALT
                         VORPcore.RpcCall("Vorp_housing:checkkey", function(result)
@@ -376,6 +377,7 @@ Citizen.CreateThread(function()
                     end
                 end
                 if distance < 2.0 then
+                         sleep = false
                     DrawText3D(doorID.objCoords.x, doorID.objCoords.y, doorID.objCoords.z + 0.2, " ", doorID.locked)
                     if IsControlJustPressed(2, 0xE8342FF2) then -- Hold ALT
                         VORPcore.RpcCall("Vorp_housing:checkkey", function(result)
