@@ -15,7 +15,8 @@ Vorp Housing For Vorp Framework
 - House Inventory
 - Show Sellable House In Map
 - House Keys
-- /mykey Give Near House Key
+- /myHouseKey Give Near House Key
+- /sellHouse Sell near House
 
 # Credits 
 
