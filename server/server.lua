@@ -161,14 +161,16 @@ RegisterNetEvent("Vorp_housing:sellhouse", function(id, key)
 					if result2[1] == nil then
 						for k, loc in pairs(Config.Rooms) do
 							if loc.Id == id then
-								Character.addCurrency(0 , loc.Price/2)
-								TriggerClientEvent("vorp:Tip", _source, _U('sellhouse') .. loc.Price/2 , 4000)
+								local lastprice = loc.Price * Config.SellPrice
+								Character.addCurrency(0 , lastprice)
+								TriggerClientEvent("vorp:Tip", _source, _U('sellhouse') .. lastprice , 4000)
 							end
 						end
 						for k, loc in pairs(Config.Houses) do
 							if loc.Id == id then
-								Character.addCurrency(0 , loc.Price/2)
-								TriggerClientEvent("vorp:Tip", _source, _U('sellhouse') .. loc.Price/2 , 4000)
+								local lastprice = loc.Price * Config.SellPrice
+								Character.addCurrency(0 , lastprice)
+								TriggerClientEvent("vorp:Tip", _source, _U('sellhouse') .. lastprice , 4000)
 							end
 						end
 						   TriggerClientEvent("vorp_housing:refreshall" , _source)
