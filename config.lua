@@ -4,6 +4,7 @@ Config.UpdateTime = 5 -- refresh database house in * minute
 Config.defaultlang = "en"
 Config.MyKey = "myHouseKey" -- command to get your house key if you lot it or give it to someones
 Config.SellHouse = "sellHouse" -- command sell near house
+Config.SellPrice = 0.5 -- percent retrun house price when selling house . 1.0 is 100%.  
 Config.Rooms = {
     {
         Id        = 1, -- must be unique
