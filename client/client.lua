@@ -198,7 +198,12 @@ function loadhouses()
         end
     end, nil)
 end
-
+-------------------- refresh client side ---------------
+RegisterNetEvent("vorp_housing:refreshall", function(charid)
+    loadrooms()
+    loadhouses()
+    TriggerServerEvent('Vorp_housing:Load')
+end)
 --------------- command give near house key --------------
 RegisterCommand(Config.MyKey, function()
     local playerCoords = GetEntityCoords(PlayerPedId())
@@ -217,7 +222,23 @@ RegisterCommand(Config.MyKey, function()
     end
 end, false)
 
+--------------- command sell near house --------------
+RegisterCommand(Config.SellHouse, function()
+    local playerCoords = GetEntityCoords(PlayerPedId())
 
+    for k, v in ipairs(Config.Rooms) do
+        local distance = #(playerCoords - v.text)
+        if distance < 2 then
+            TriggerServerEvent("Vorp_housing:sellhouse", v.Id)
+        end
+    end
+    for k, v in ipairs(Config.Houses) do
+        local distance2 = #(playerCoords - v.text)
+        if distance2 < 2 then
+            TriggerServerEvent("Vorp_housing:sellhouse", v.Id)
+        end
+    end
+end, false)
 -------------------------------------- doors ------------------------------------
 
 
