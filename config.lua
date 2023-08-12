@@ -3,6 +3,7 @@ Config.debug = false
 Config.UpdateTime = 5 -- refresh database house in * minute
 Config.defaultlang = "en"
 Config.MyKey = "myHouseKey" -- command to get your house key if you lot it or give it to someones
+Config.SellHouse = "sellHouse" -- command sell near house
 Config.Rooms = {
     {
         Id        = 1, -- must be unique
