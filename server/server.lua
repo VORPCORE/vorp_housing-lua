@@ -146,6 +146,38 @@ RegisterNetEvent("Vorp_housing:givekeys", function(id, key)
 	end)
 end)
 
+---------- sellhouse command ---------
+RegisterNetEvent("Vorp_housing:sellhouse", function(id, key)
+	local _source = source
+	local User = VORPcore.getUser(_source)
+	local Character = User.getUsedCharacter
+	local charidentifier = Character.charIdentifier
+
+	MySQL.query('SELECT * FROM housing WHERE charidentifier = ? AND id = ?', { charidentifier, id }, function(result)
+		
+		if result[1] then
+			MySQL.query('DELETE FROM `housing` WHERE charidentifier = ? AND id = ?', { charidentifier, id }, function(r)
+				MySQL.query('SELECT * FROM housing WHERE charidentifier = ? AND id = ?', { charidentifier, id }, function(result2)
+					if result2[1] == nil then
+						for k, loc in pairs(Config.Rooms) do
+							if loc.Id == id then
+								Character.addCurrency(0 , loc.Price/2)
+								TriggerClientEvent("vorp:Tip", _source, _U('sellhouse') .. loc.Price/2 , 4000)
+							end
+						end
+						for k, loc in pairs(Config.Houses) do
+							if loc.Id == id then
+								Character.addCurrency(0 , loc.Price/2)
+								TriggerClientEvent("vorp:Tip", _source, _U('sellhouse') .. loc.Price/2 , 4000)
+							end
+						end
+						   TriggerClientEvent("vorp_housing:refreshall" , _source)
+					end
+		    	end)    	
+			end)
+		end		
+	end)
+end)
 
 
 --------- open inventory rooms -------------------
