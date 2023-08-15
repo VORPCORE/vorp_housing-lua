@@ -6,6 +6,7 @@ Locales["en"] = {
     buy = "BUY : ",
     openinventory = "Inventory. Press [ENTER]",
     havekey = "you Dont Have This House Key !",
-    sellhouse= "You Sold Your House . Receive : "
+    sellhouse= "You Sold Your House . Receive : ",
+    dontsell = "You Cant Sell This House"
     
 }
