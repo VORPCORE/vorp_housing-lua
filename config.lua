@@ -21,7 +21,8 @@ Config.Rooms = {
                 locked    = true
             }
         },
-        MaxWeight = 100 -- inventory slots.
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 100 -- inventory slots.
     },
     {
         Id        = 2,
@@ -38,7 +39,8 @@ Config.Rooms = {
                 locked    = true
             }
         },
-        MaxWeight = 100
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 100
     },
     {
         Id        = 3,
@@ -55,7 +57,8 @@ Config.Rooms = {
                 locked    = true
             }
         },
-        MaxWeight = 100
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 100
     },
 }
 
@@ -76,7 +79,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1000 -- inventory slots.
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1000 -- inventory slots.
     },
     {
         Id        = 102,
@@ -93,7 +97,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 500
     },
     {
         Id        = 103,
@@ -110,7 +115,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1000
     },
     {
         Id        = 104,
@@ -127,7 +133,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1000
     },
     {
         Id        = 105,
@@ -144,7 +151,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 700
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 700
     },
     {
         Id        = 106,
@@ -161,7 +169,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500
     },
     {
         Id        = 107,
@@ -180,7 +189,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 3000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 3000
     },
     {
         Id        = 108,
@@ -197,7 +207,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 500
     },
     {
         Id        = 109,
@@ -220,7 +231,8 @@ Config.Houses = {
                 locked    = true,
             }
         },
-        MaxWeight = 1500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500
     },
     {
         Id        = 110,
@@ -243,7 +255,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1300
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1300
     },
     {
         Id        = 111,
@@ -266,7 +279,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1300
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1300
     },
     {
         Id        = 112,
@@ -289,7 +303,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500
     },
     {
         Id        = 113,
@@ -306,7 +321,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500
     },
     {
         Id        = 114,
@@ -323,7 +339,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500
     },
     {
         Id        = 115,
@@ -340,7 +357,8 @@ Config.Houses = {
                 locked    = true,
             }
         },
-        MaxWeight = 1000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1000
     },
     {
         Id        = 116,
@@ -357,7 +375,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500
     },
     {
         Id        = 117,
@@ -374,7 +393,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500
     },
     {
         Id        = 118,
@@ -403,7 +423,8 @@ Config.Houses = {
                 locked    = true,
             }
         },
-        MaxWeight = 1000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1000
     },
     {
         Id        = 119,
@@ -420,7 +441,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1000
     },
     {
         Id        = 120,
@@ -437,7 +459,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500
     },
     {
         Id        = 122,
@@ -454,7 +477,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500
     },
     {
         Id        = 123,
@@ -471,7 +495,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1000
     },
     {
         Id        = 124,
@@ -494,7 +519,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500
     },
     {
         Id        = 125,
@@ -511,7 +537,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1000
     },
     {
         Id        = 126,
@@ -534,7 +561,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1000
     },
     {
         Id        = 127,
@@ -551,7 +579,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500
     },
     {
         Id        = 128,
@@ -568,7 +597,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1000
     },
     {
         Id        = 129,
@@ -585,7 +615,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1000
     },
     {
         Id        = 130,
@@ -602,7 +633,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 1500
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500
     },
     {
         Id        = 131,
@@ -686,7 +718,8 @@ Config.Houses = {
             }
 
         },
-        MaxWeight = 3000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 3000
     },
     {
         Id        = 132,
@@ -703,7 +736,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 2000
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 2000
     },
     {
         Id        = 133,
@@ -726,7 +760,8 @@ Config.Houses = {
                 locked    = true
             }
         },
-        MaxWeight = 2000,
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 2000,
 
     },
     {
@@ -751,6 +786,7 @@ Config.Houses = {
                 locked    = true
             },
         },
-        MaxWeight = 1500,
+        sell = true , -- if set false player cannot sell this house
+		MaxWeight = 1500,
     },
 }
