@@ -152,10 +152,21 @@ RegisterNetEvent("Vorp_housing:sellhouse", function(id, key)
 	local User = VORPcore.getUser(_source)
 	local Character = User.getUsedCharacter
 	local charidentifier = Character.charIdentifier
-
+        local sell = false
 	MySQL.query('SELECT * FROM housing WHERE charidentifier = ? AND id = ?', { charidentifier, id }, function(result)
 		
 		if result[1] then
+		        for k, loc in pairs(Config.Rooms) do
+				if loc.Id == id then
+					sell = loc.sell
+				end
+			end
+			for k, loc in pairs(Config.Houses) do
+				if loc.Id == id then
+					sell = loc.sell
+				end
+			end
+			if sell then			
 			MySQL.query('DELETE FROM `housing` WHERE charidentifier = ? AND id = ?', { charidentifier, id }, function(r)
 				MySQL.query('SELECT * FROM housing WHERE charidentifier = ? AND id = ?', { charidentifier, id }, function(result2)
 					if result2[1] == nil then
@@ -177,6 +188,10 @@ RegisterNetEvent("Vorp_housing:sellhouse", function(id, key)
 					end
 		    	end)    	
 			end)
+
+		    else
+			TriggerClientEvent("vorp:Tip", _source, _U('dontsell') , 4000)
+		    end
 		end		
 	end)
 end)
