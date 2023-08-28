@@ -442,6 +442,8 @@ Citizen.CreateThread(function()
   end)
 
 function DrawText3D(x, y, z, text, state)
+    local ismapact = IsAppActive(`MAP`)
+    if ismapact == 0 then
     local onScreen, _x, _y = GetScreenCoordFromWorldCoord(x, y, z)
     local px, py, pz = table.unpack(GetGameplayCamCoord())
     SetTextScale(0.35, 0.35)
@@ -454,6 +456,7 @@ function DrawText3D(x, y, z, text, state)
         DrawSprite("generic_textures", "lock", _x, _y + 0.0125, 0.04, 0.045, 0.1, 255, 0, 0, 255, 0)
     else
         DrawSprite("inventory_items", "consumable_lock_breaker", _x, _y + 0.0125, 0.04, 0.05, 0.1, 1, 255, 1, 255, 0)
+    end
     end
 end
 
