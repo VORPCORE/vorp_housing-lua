@@ -174,6 +174,10 @@ RegisterNetEvent("Vorp_housing:sellhouse", function(id, key)
 							if loc.Id == id then
 								local lastprice = loc.Price * Config.SellPrice
 								Character.addCurrency(0 , lastprice)
+								local keycount = VorpInv.getItemCount(_source, result[1].key, nil)
+								if keycount > 0  then
+                                                                     VorpInv.subItem(_source, result[1].key, keycount, nil)
+								end
 								TriggerClientEvent("vorp:Tip", _source, _U('sellhouse') .. lastprice , 4000)
 							end
 						end
@@ -181,6 +185,10 @@ RegisterNetEvent("Vorp_housing:sellhouse", function(id, key)
 							if loc.Id == id then
 								local lastprice = loc.Price * Config.SellPrice
 								Character.addCurrency(0 , lastprice)
+								local keycount = VorpInv.getItemCount(_source, result[1].key, nil)
+								if keycount > 0  then
+                                                                     VorpInv.subItem(_source, result[1].key, keycount, nil)
+								end
 								TriggerClientEvent("vorp:Tip", _source, _U('sellhouse') .. lastprice , 4000)
 							end
 						end
