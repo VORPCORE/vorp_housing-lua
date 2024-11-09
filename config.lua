@@ -2,6 +2,7 @@ Config = {}
 Config.debug = false
 Config.UpdateTime = 5 -- refresh database house in * minute
 Config.defaultlang = "en"
+Config.BuyHouseKey = 0xC7B5340A -- Enter
 Config.MyKey = "myHouseKey" -- command to get your house key if you lot it or give it to someones
 Config.SellHouse = "sellHouse" -- command sell near house
 Config.SellPrice = 0.5 -- percent retrun house price when selling house . 1.0 is 100%.  

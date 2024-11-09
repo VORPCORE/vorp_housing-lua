@@ -40,7 +40,7 @@ Citizen.CreateThread(function()
                 if idistance < 2 then
                     letSleep = false
                     DrawTxt(_U("openinventory"), 0.50, 0.90, 0.7, 0.7, true, 255, 255, 255, 255, true)
-                    if IsControlJustReleased(0, 0xC7B5340A) then
+                    if IsControlJustReleased(0, Config.BuyHouseKey) then
                         TriggerServerEvent("Vorp_housing:GetInventoryRooms", v.Id)
                     end
                 end
@@ -56,7 +56,7 @@ Citizen.CreateThread(function()
                     end
 
                     DrawText3Ds(v.text.x, v.text.y, v.text.z, message)
-                    if IsControlJustReleased(0, 0xC7B5340A) and canbuy2 then
+                    if IsControlJustReleased(0, Config.BuyHouseKey) and canbuy2 then
                         VORPcore.RpcCall("Vorp_housing:buyrooms", function(result)
                             if result == 1 then
                                 VORPcore.NotifyRightTip(_U("boughtroom"), 4000)
@@ -78,7 +78,7 @@ Citizen.CreateThread(function()
                 if idistance2 < 2.0 then
                     letSleep = false
                     DrawTxt(_U("openinventory"), 0.50, 0.90, 0.7, 0.7, true, 255, 255, 255, 255, true)
-                    if IsControlJustReleased(0, 0xC7B5340A) then
+                    if IsControlJustReleased(0, Config.BuyHouseKey) then
                         TriggerServerEvent("Vorp_housing:GetInventoryHouses", v.Id)
                     end
                 end
@@ -92,7 +92,7 @@ Citizen.CreateThread(function()
                         canbuy = true
                     end
                     DrawText3Ds(v.text.x, v.text.y, v.text.z, message)
-                    if IsControlJustReleased(0, 0xC7B5340A) and canbuy then
+                    if IsControlJustReleased(0, Config.BuyHouseKey) and canbuy then
                         VORPcore.RpcCall("Vorp_housing:buyhouse", function(result)
                             if result == 1 then
                                 VORPcore.NotifyRightTip(_U("boughthouse"), 4000)
