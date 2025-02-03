@@ -1,4 +1,3 @@
-
 local HouseInfo = {}
 local RoomInfo = {}
 VorpInv = exports.vorp_inventory:vorp_inventoryApi()
@@ -33,8 +32,10 @@ end)
 -------------- load rooms ---------------
 VORPcore.addRpcCallback("Vorp_housing:getrooms", function(source, cb, args)
 	MySQL.query('SELECT * FROM rooms', {}, function(result)
-		if result then
+		if result[1] then
 			return cb(result) -- success
+		else
+			return cb(nil) -- no rooms
 		end
 	end)
 end)
@@ -42,8 +43,10 @@ end)
 -------- load houses ----------
 VORPcore.addRpcCallback("Vorp_housing:gethouses", function(source, cb, args)
 	MySQL.query('SELECT * FROM housing', {}, function(result)
-		if result then
+		if result[1] then
 			return cb(result) -- success
+		else
+			return cb(nil) -- no houses
 		end
 	end)
 end)
@@ -71,10 +74,9 @@ VORPcore.addRpcCallback("Vorp_housing:buyhouse", function(source, cb, args)
 					["@charidentifier"] = Character.charIdentifier,
 					["@key"] = args.key
 				}
-				MySQL.Sync.execute(
+				MySQL.query(
 					"INSERT INTO `housing`(`id`, `name`, `identifier`, `charidentifier`, `key`) VALUES ( @id , @name , @identifier , @charidentifier , @key)",
-					Parameters, function(result2)
-					end)
+					Parameters, function(result2) end)
 				Character.removeCurrency(0, price)
 				VorpInv.addItem(_source, args.key, 1, false)
 				return cb(1) -- succes
@@ -110,10 +112,11 @@ VORPcore.addRpcCallback("Vorp_housing:buyrooms", function(source, cb, args)
 					["@charidentifier"] = Character.charIdentifier,
 					["@key"] = args.key
 				}
-				MySQL.Sync.execute(
+				MySQL.query(
 					"INSERT INTO `rooms`(`id`, `name`, `identifier`, `charidentifier`, `key`) VALUES ( @id , @name , @identifier , @charidentifier , @key)",
 					Parameters, function(result2)
 					end)
+
 				Character.removeCurrency(0, price)
 				VorpInv.addItem(_source, args.key, 1, false)
 				return cb(1) -- succes
@@ -152,11 +155,10 @@ RegisterNetEvent("Vorp_housing:sellhouse", function(id, key)
 	local User = VORPcore.getUser(_source)
 	local Character = User.getUsedCharacter
 	local charidentifier = Character.charIdentifier
-        local sell = false
+	local sell = false
 	MySQL.query('SELECT * FROM housing WHERE charidentifier = ? AND id = ?', { charidentifier, id }, function(result)
-		
 		if result[1] then
-		        for k, loc in pairs(Config.Rooms) do
+			for k, loc in pairs(Config.Rooms) do
 				if loc.Id == id then
 					sell = loc.sell
 				end
@@ -166,41 +168,43 @@ RegisterNetEvent("Vorp_housing:sellhouse", function(id, key)
 					sell = loc.sell
 				end
 			end
-			if sell then			
-			MySQL.query('DELETE FROM `housing` WHERE charidentifier = ? AND id = ?', { charidentifier, id }, function(r)
-				MySQL.query('SELECT * FROM housing WHERE charidentifier = ? AND id = ?', { charidentifier, id }, function(result2)
-					if result2[1] == nil then
-						for k, loc in pairs(Config.Rooms) do
-							if loc.Id == id then
-								local lastprice = loc.Price * Config.SellPrice
-								Character.addCurrency(0 , lastprice)
-								local keycount = VorpInv.getItemCount(_source, result[1].key, nil)
-								if keycount > 0  then
-                                                                     VorpInv.subItem(_source, result[1].key, keycount, nil)
-								end
-								TriggerClientEvent("vorp:Tip", _source, _U('sellhouse') .. lastprice , 4000)
-							end
-						end
-						for k, loc in pairs(Config.Houses) do
-							if loc.Id == id then
-								local lastprice = loc.Price * Config.SellPrice
-								Character.addCurrency(0 , lastprice)
-								local keycount = VorpInv.getItemCount(_source, result[1].key, nil)
-								if keycount > 0  then
-                                                                     VorpInv.subItem(_source, result[1].key, keycount, nil)
-								end
-								TriggerClientEvent("vorp:Tip", _source, _U('sellhouse') .. lastprice , 4000)
-							end
-						end
-						   TriggerClientEvent("vorp_housing:refreshall" , _source)
-					end
-		    	end)    	
-			end)
+			if sell then
+				MySQL.query('DELETE FROM `housing` WHERE charidentifier = ? AND id = ?', { charidentifier, id },
+					function(r)
+						MySQL.query('SELECT * FROM housing WHERE charidentifier = ? AND id = ?', { charidentifier, id },
+							function(result2)
+								if result2[1] == nil then
+									for k, loc in pairs(Config.Rooms) do
+										if loc.Id == id then
+											local lastprice = loc.Price * Config.SellPrice
+											Character.addCurrency(0, lastprice)
+											local keycount = VorpInv.getItemCount(_source, result[1].key, nil)
+											if keycount > 0 then
+												VorpInv.subItem(_source, result[1].key, keycount, nil)
+											end
+											TriggerClientEvent("vorp:Tip", _source, _U('sellhouse') .. lastprice, 4000)
+										end
+									end
 
-		    else
-			TriggerClientEvent("vorp:Tip", _source, _U('dontsell') , 4000)
-		    end
-		end		
+									for k, loc in pairs(Config.Houses) do
+										if loc.Id == id then
+											local lastprice = loc.Price * Config.SellPrice
+											Character.addCurrency(0, lastprice)
+											local keycount = VorpInv.getItemCount(_source, result[1].key, nil)
+											if keycount > 0 then
+												VorpInv.subItem(_source, result[1].key, keycount, nil)
+											end
+											TriggerClientEvent("vorp:Tip", _source, _U('sellhouse') .. lastprice, 4000)
+										end
+									end
+									TriggerClientEvent("vorp_housing:refreshall", _source)
+								end
+							end)
+					end)
+			else
+				TriggerClientEvent("vorp:Tip", _source, _U('dontsell'), 4000)
+			end
+		end
 	end)
 end)
 
@@ -228,7 +232,7 @@ RegisterNetEvent("Vorp_housing:GetInventoryHouses", function(id)
 	local Character = User.getUsedCharacter
 	local charidentifier = Character.charIdentifier
 	MySQL.query('SELECT * FROM housing WHERE id = ? AND charidentifier = ?', { id, charidentifier }, function(result)
-		if result[1]  then
+		if result[1] then
 			VorpInv.OpenInv(_source, result[1].key)
 		end
 	end)
@@ -258,14 +262,14 @@ end)
 
 
 
-RegisterNetEvent('Vorp_housing:updateStatehouse', function(k, k2, state, cb)
+RegisterNetEvent('Vorp_housing:updateStatehouse', function(k, k2, state)
 	HouseInfo[k].Doors[k2].locked = state
 	TriggerClientEvent('Vorp_housing:setStateHouse', -1, k, k2, state)
 end)
 
 
 
-RegisterNetEvent('Vorp_housing:updateStateroom', function(k, k2, state, cb)
+RegisterNetEvent('Vorp_housing:updateStateroom', function(k, k2, state)
 	RoomInfo[k].Doors[k2].locked = state
 	TriggerClientEvent('Vorp_housing:setStateRoom', -1, k, k2, state)
 end)
