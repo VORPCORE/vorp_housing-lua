@@ -24,8 +24,8 @@ local args = {}
 CreateThread(function()
     while true do
         local letSleep = 1000
-        if loaded_house and loaded_rooms then
-            local playerCoords = GetEntityCoords(PlayerPedId())
+        local playerCoords = GetEntityCoords(PlayerPedId())
+        if loaded_rooms then
             for _, v in ipairs(Config.Rooms) do
                 local distance = #(playerCoords - v.text)
                 local idistance = #(playerCoords - v.Inventory)
@@ -64,6 +64,9 @@ CreateThread(function()
                     end
                 end
             end
+        end
+
+        if loaded_house then
             for _, v in ipairs(Config.Houses) do
                 local distance2 = #(playerCoords - v.text)
                 local idistance2 = #(playerCoords - v.Inventory)
@@ -75,6 +78,7 @@ CreateThread(function()
                         TriggerServerEvent("Vorp_housing:GetInventoryHouses", v.Id)
                     end
                 end
+
                 if distance2 < 2 then
                     letSleep = 0
                     local message = ""
@@ -183,11 +187,11 @@ function loadhouses()
                 end
                 if not v.BlipHandle then
                     local blip = VORPutils.Blips:SetBlip(v.Name, sprite, 0.2, v.text.x, v.text.y, v.text.z, nil)
-                    v.BlipHandle = blip
+                    v.BlipHandle = blip:Get()
                 else
                     RemoveBlip(v.BlipHandle)
                     local blip = VORPutils.Blips:SetBlip(v.Name, sprite, 0.2, v.text.x, v.text.y, v.text.z, nil)
-                    v.BlipHandle = blip
+                    v.BlipHandle = blip:Get()
                 end
             end
 
@@ -308,9 +312,11 @@ Citizen.CreateThread(function()
                         end
                     end
                 end
+
                 if distance < 2.0 then
                     sleep = false
                     DrawText3D(doorID.objCoords.x, doorID.objCoords.y, doorID.objCoords.z + 0.2, " ", doorID.locked)
+
                     if IsControlJustPressed(2, 0xE8342FF2) then -- Hold ALT
                         VORPcore.RpcCall("Vorp_housing:checkkey", function(result)
                             if result then
@@ -456,13 +462,12 @@ function DrawText3D(x, y, z, text, state)
     local ismapact = IsUiappActiveByHash(`MAP`)
     if ismapact == 0 then
         local onScreen, _x, _y = GetScreenCoordFromWorldCoord(x, y, z)
-        local px, py, pz = table.unpack(GetGameplayCamCoord())
         SetTextScale(0.35, 0.35)
         SetTextFontForCurrentCommand(1)
-        SetTextColor(255, 255, 255, 215)
-        local str = VarString(10, "LITERAL_STRING", text, Citizen.ResultAsLong())
+        BgSetTextColor(255, 255, 255, 215)
+        local str = VarString(10, "LITERAL_STRING", text)
         SetTextCentre(1)
-        DisplayText(str, _x, _y)
+        BgDisplayText(str, _x, _y)
         if state then
             DrawSprite("generic_textures", "lock", _x, _y + 0.0125, 0.04, 0.045, 0.1, 255, 0, 0, 255, false)
         else
