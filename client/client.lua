@@ -25,86 +25,86 @@ CreateThread(function()
     while true do
         local letSleep = 1000
         local playerCoords = GetEntityCoords(PlayerPedId())
-        if loaded_rooms then
-            for _, v in ipairs(Config.Rooms) do
-                local distance = #(playerCoords - v.text)
-                local idistance = #(playerCoords - v.Inventory)
 
-                if idistance < 2 then
-                    letSleep = 0
-                    DrawTxt(_U("openinventory"), 0.50, 0.90, 0.7, 0.7, true, 255, 255, 255, 255, true)
-                    if IsControlJustPressed(0, Config.BuyHouseKey) then
-                        TriggerServerEvent("Vorp_housing:GetInventoryRooms", v.Id)
-                    end
+        for _, v in ipairs(Config.Rooms) do
+            local distance = #(playerCoords - v.text)
+            local idistance = #(playerCoords - v.Inventory)
+
+            if idistance < 2 then
+                letSleep = 0
+                DrawTxt(_U("openinventory"), 0.50, 0.90, 0.7, 0.7, true, 255, 255, 255, 255, true)
+                if IsControlJustPressed(0, Config.BuyHouseKey) then
+                    TriggerServerEvent("Vorp_housing:GetInventoryRooms", v.Id)
+                end
+            end
+
+            if distance < 2 then
+                letSleep = 0
+                local message = ""
+                local canbuy2 = false
+                if checknotexist(v.Id, rooms) then
+                    message = _U("buy") .. v.Price .. "$\n" .. "press enter to buy room"
+                    args = v
+                    canbuy2 = true
                 end
 
-                if distance < 2 then
-                    letSleep = 0
-                    local message = ""
-                    local canbuy2 = false
-                    if checknotexist(v.Id, rooms) then
-                        message = _U("buy") .. v.Price .. "$\n" .. "press enter to buy room"
-                        args = v
-                        canbuy2 = true
-                    end
-
-                    DrawText3Ds(v.text.x, v.text.y, v.text.z, message)
-                    if IsControlJustPressed(0, Config.BuyHouseKey) and canbuy2 then
-                        VORPcore.RpcCall("Vorp_housing:buyrooms", function(result)
-                            if result == 1 then
-                                VORPcore.NotifyRightTip(_U("boughtroom"), 4000)
-                                loadrooms()
-                            elseif result == 2 then
-                                VORPcore.NotifyRightTip(_U("notsellable"), 4000)
-                                loadrooms()
-                            elseif result == 3 then
-                                VORPcore.NotifyRightTip(_U("nomoney"), 4000)
-                            end
-                        end, args)
-                    end
+                DrawText3Ds(v.text.x, v.text.y, v.text.z, message)
+                if IsControlJustPressed(0, Config.BuyHouseKey) and canbuy2 then
+                    VORPcore.RpcCall("Vorp_housing:buyrooms", function(result)
+                        if result == 1 then
+                            VORPcore.NotifyRightTip(_U("boughtroom"), 4000)
+                            loadrooms()
+                        elseif result == 2 then
+                            VORPcore.NotifyRightTip(_U("notsellable"), 4000)
+                            loadrooms()
+                        elseif result == 3 then
+                            VORPcore.NotifyRightTip(_U("nomoney"), 4000)
+                        end
+                    end, args)
                 end
             end
         end
 
-        if loaded_house then
-            for _, v in ipairs(Config.Houses) do
-                local distance2 = #(playerCoords - v.text)
-                local idistance2 = #(playerCoords - v.Inventory)
 
-                if idistance2 < 2.0 then
-                    letSleep = 0
-                    DrawTxt(_U("openinventory"), 0.50, 0.90, 0.7, 0.7, true, 255, 255, 255, 255, true)
-                    if IsControlJustPressed(0, Config.BuyHouseKey) then
-                        TriggerServerEvent("Vorp_housing:GetInventoryHouses", v.Id)
-                    end
+
+        for _, v in ipairs(Config.Houses) do
+            local distance2 = #(playerCoords - v.text)
+            local idistance2 = #(playerCoords - v.Inventory)
+
+            if idistance2 < 2.0 then
+                letSleep = 0
+                DrawTxt(_U("openinventory"), 0.50, 0.90, 0.7, 0.7, true, 255, 255, 255, 255, true)
+                if IsControlJustPressed(0, Config.BuyHouseKey) then
+                    TriggerServerEvent("Vorp_housing:GetInventoryHouses", v.Id)
                 end
+            end
 
-                if distance2 < 2 then
-                    letSleep = 0
-                    local message = ""
-                    local canbuy = false
-                    if checknotexist(v.Id, houses) then
-                        message = _U("buy") .. v.Price .. "$\n" .. "press enter to buy house"
-                        args = v
-                        canbuy = true
-                    end
-                    DrawText3Ds(v.text.x, v.text.y, v.text.z, message)
-                    if IsControlJustPressed(0, Config.BuyHouseKey) and canbuy then
-                        VORPcore.RpcCall("Vorp_housing:buyhouse", function(result)
-                            if result == 1 then
-                                VORPcore.NotifyRightTip(_U("boughthouse"), 4000)
-                                loadhouses()
-                            elseif result == 2 then
-                                VORPcore.NotifyRightTip(_U("notsellable"), 4000)
-                                loadhouses()
-                            elseif result == 3 then
-                                VORPcore.NotifyRightTip(_U("nomoney"), 4000)
-                            end
-                        end, args)
-                    end
+            if distance2 < 2 then
+                letSleep = 0
+                local message = ""
+                local canbuy = false
+                if checknotexist(v.Id, houses) then
+                    message = _U("buy") .. v.Price .. "$\n" .. "press enter to buy house"
+                    args = v
+                    canbuy = true
+                end
+                DrawText3Ds(v.text.x, v.text.y, v.text.z, message)
+                if IsControlJustPressed(0, Config.BuyHouseKey) and canbuy then
+                    VORPcore.RpcCall("Vorp_housing:buyhouse", function(result)
+                        if result == 1 then
+                            VORPcore.NotifyRightTip(_U("boughthouse"), 4000)
+                            loadhouses()
+                        elseif result == 2 then
+                            VORPcore.NotifyRightTip(_U("notsellable"), 4000)
+                            loadhouses()
+                        elseif result == 3 then
+                            VORPcore.NotifyRightTip(_U("nomoney"), 4000)
+                        end
+                    end, args)
                 end
             end
         end
+
 
         Citizen.Wait(letSleep)
     end
