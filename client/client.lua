@@ -33,7 +33,7 @@ CreateThread(function()
                 if idistance < 2 then
                     letSleep = 0
                     DrawTxt(_U("openinventory"), 0.50, 0.90, 0.7, 0.7, true, 255, 255, 255, 255, true)
-                    if IsControlJustReleased(0, Config.BuyHouseKey) then
+                    if IsControlJustPressed(0, Config.BuyHouseKey) then
                         TriggerServerEvent("Vorp_housing:GetInventoryRooms", v.Id)
                     end
                 end
@@ -43,13 +43,13 @@ CreateThread(function()
                     local message = ""
                     local canbuy2 = false
                     if checknotexist(v.Id, rooms) then
-                        message = _U("buy") .. v.Price .. "$"
+                        message = _U("buy") .. v.Price .. "$\n" .. "press enter to buy room"
                         args = v
                         canbuy2 = true
                     end
 
                     DrawText3Ds(v.text.x, v.text.y, v.text.z, message)
-                    if IsControlJustReleased(0, Config.BuyHouseKey) and canbuy2 then
+                    if IsControlJustPressed(0, Config.BuyHouseKey) and canbuy2 then
                         VORPcore.RpcCall("Vorp_housing:buyrooms", function(result)
                             if result == 1 then
                                 VORPcore.NotifyRightTip(_U("boughtroom"), 4000)
@@ -74,7 +74,7 @@ CreateThread(function()
                 if idistance2 < 2.0 then
                     letSleep = 0
                     DrawTxt(_U("openinventory"), 0.50, 0.90, 0.7, 0.7, true, 255, 255, 255, 255, true)
-                    if IsControlJustReleased(0, Config.BuyHouseKey) then
+                    if IsControlJustPressed(0, Config.BuyHouseKey) then
                         TriggerServerEvent("Vorp_housing:GetInventoryHouses", v.Id)
                     end
                 end
@@ -84,12 +84,12 @@ CreateThread(function()
                     local message = ""
                     local canbuy = false
                     if checknotexist(v.Id, houses) then
-                        message = _U("buy") .. v.Price .. "$"
+                        message = _U("buy") .. v.Price .. "$\n" .. "press enter to buy house"
                         args = v
                         canbuy = true
                     end
                     DrawText3Ds(v.text.x, v.text.y, v.text.z, message)
-                    if IsControlJustReleased(0, Config.BuyHouseKey) and canbuy then
+                    if IsControlJustPressed(0, Config.BuyHouseKey) and canbuy then
                         VORPcore.RpcCall("Vorp_housing:buyhouse", function(result)
                             if result == 1 then
                                 VORPcore.NotifyRightTip(_U("boughthouse"), 4000)
@@ -115,21 +115,21 @@ end)
 function DrawTxt(str, x, y, w, h, enableShadow, col1, col2, col3, a, centre)
     local str = VarString(10, "LITERAL_STRING", str)
     SetTextScale(w, h)
-    SetTextColor(math.floor(col1), math.floor(col2), math.floor(col3), math.floor(a))
+    BgSetTextColor(math.floor(col1), math.floor(col2), math.floor(col3), math.floor(a))
     SetTextCentre(centre)
     if enableShadow then SetTextDropshadow(1, 0, 0, 0, 255) end
     Citizen.InvokeNative(0xADA9255D, 1);
-    DisplayText(str, x, y)
+    BgDisplayText(str, x, y)
 end
 
 function DrawText3Ds(x, y, z, text)
     local _, _x, _y = GetScreenCoordFromWorldCoord(x, y, z)
     SetTextScale(0.35, 0.35)
     SetTextFontForCurrentCommand(9)
-    SetTextColor(255, 255, 255, 215)
+    BgSetTextColor(255, 255, 255, 215)
     local str = VarString(10, 'LITERAL_STRING', text, Citizen.ResultAsLong())
     SetTextCentre(1)
-    DisplayText(str, _x, _y)
+    BgDisplayText(str, _x, _y)
 end
 
 RegisterNetEvent("vorp:SelectedCharacter", function(charid)
@@ -315,7 +315,8 @@ Citizen.CreateThread(function()
 
                 if distance < 2.0 then
                     sleep = false
-                    DrawText3D(doorID.objCoords.x, doorID.objCoords.y, doorID.objCoords.z + 0.2, " ", doorID.locked)
+                    DrawText3D(doorID.objCoords.x, doorID.objCoords.y, doorID.objCoords.z + 0.2, "press alt to open door",
+                        doorID.locked)
 
                     if IsControlJustPressed(2, 0xE8342FF2) then -- Hold ALT
                         VORPcore.RpcCall("Vorp_housing:checkkey", function(result)
@@ -416,16 +417,17 @@ Citizen.CreateThread(function()
                 end
                 if distance < 2.0 then
                     sleep = false
-                    DrawText3D(doorID.objCoords.x, doorID.objCoords.y, doorID.objCoords.z + 0.2, " ", doorID.locked)
+                    DrawText3D(doorID.objCoords.x, doorID.objCoords.y, doorID.objCoords.z + 0.2, "press alt to open door",
+                        doorID.locked)
                     if IsControlJustPressed(2, 0xE8342FF2) then -- Hold ALT
                         VORPcore.RpcCall("Vorp_housing:checkkey", function(result)
                             if result then
                                 TriggerEvent("Vorp_housing:changedoorroom", k, k2)
+                                OpenDoors(PlayerPedId(), doorID.objCoords)
                             else
                                 TriggerEvent("vorp:TipBottom", _U("havekey"), 2000)
                             end
                         end, v.key)
-                        OpenDoors(PlayerPedId(), doorID.objCoords)
                     end
                 end
             end
