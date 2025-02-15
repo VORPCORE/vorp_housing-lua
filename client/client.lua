@@ -167,6 +167,26 @@ function loadrooms()
     end, nil)
 end
 
+local function loadBlips(houses)
+    for _, v in ipairs(Config.Houses) do
+        local sprite = "blip_ambient_quartermaster"
+        for _, vv in ipairs(houses) do
+            if v.Id == vv.id then
+                sprite = "blip_proc_home"
+                break
+            end
+        end
+        if not v.BlipHandle then
+            local blip = VORPutils.Blips:SetBlip(v.Name, sprite, 0.2, v.text.x, v.text.y, v.text.z, nil)
+            v.BlipHandle = blip:Get()
+        else
+            RemoveBlip(v.BlipHandle)
+            local blip = VORPutils.Blips:SetBlip(v.Name, sprite, 0.2, v.text.x, v.text.y, v.text.z, nil)
+            v.BlipHandle = blip:Get()
+        end
+    end
+end
+
 function loadhouses()
     VORPcore.RpcCall("Vorp_housing:gethouses", function(result)
         if result == nil then
@@ -174,27 +194,10 @@ function loadhouses()
             if Config.debug then
                 print("HOUSES NOT LOADED")
             end
+            loadBlips({})
         else
             houses = result
-            loaded_house = true
-
-            for _, v in ipairs(Config.Houses) do
-                local sprite = "blip_ambient_quartermaster"
-                for _, vv in ipairs(houses) do
-                    if v.Id == vv.id then
-                        sprite = "blip_proc_home"
-                    end
-                end
-                if not v.BlipHandle then
-                    local blip = VORPutils.Blips:SetBlip(v.Name, sprite, 0.2, v.text.x, v.text.y, v.text.z, nil)
-                    v.BlipHandle = blip:Get()
-                else
-                    RemoveBlip(v.BlipHandle)
-                    local blip = VORPutils.Blips:SetBlip(v.Name, sprite, 0.2, v.text.x, v.text.y, v.text.z, nil)
-                    v.BlipHandle = blip:Get()
-                end
-            end
-
+            loadBlips(houses)
 
             if Config.debug then
                 print("HOUSES LOADED")
