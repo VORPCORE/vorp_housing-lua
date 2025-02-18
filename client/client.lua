@@ -9,7 +9,7 @@ TriggerEvent("getUtils", function(utils)
     VORPutils = utils
 end)
 
--------- get all rooms and set blip -------------------
+-------- Get all rooms and set blip -------------------
 CreateThread(function()
     while true do
         loadrooms()
@@ -18,9 +18,8 @@ CreateThread(function()
     end
 end)
 
-
 local args = {}
--------- show text -------
+-------- Show Text -------
 CreateThread(function()
     while true do
         local letSleep = 1000
@@ -43,7 +42,7 @@ CreateThread(function()
                 local message = ""
                 local canbuy2 = false
                 if checknotexist(v.Id, rooms) then
-                    message = _U("buy") .. v.Price .. "$\n" .. "press enter to buy room"
+                    message = _U("buy") .. v.Price .. "$\n" .. _U("pressenterroom")
                     args = v
                     canbuy2 = true
                 end
@@ -84,7 +83,7 @@ CreateThread(function()
                 local message = ""
                 local canbuy = false
                 if checknotexist(v.Id, houses) then
-                    message = _U("buy") .. v.Price .. "$\n" .. "press enter to buy house"
+                    message = _U("buy") .. v.Price .. "$\n" .. _U("pressenterhouse")
                     args = v
                     canbuy = true
                 end
@@ -105,12 +104,9 @@ CreateThread(function()
             end
         end
 
-
-        Citizen.Wait(letSleep)
+        Wait(letSleep)
     end
 end)
-
-
 
 function DrawTxt(str, x, y, w, h, enableShadow, col1, col2, col3, a, centre)
     local str = VarString(10, "LITERAL_STRING", str)
@@ -137,8 +133,6 @@ RegisterNetEvent("vorp:SelectedCharacter", function(charid)
     loadhouses()
     TriggerServerEvent('Vorp_housing:Load')
 end)
-
-
 
 function checknotexist(id, table)
     local notexistt = true
@@ -206,7 +200,7 @@ function loadhouses()
     end, nil)
 end
 
---onresourceStop
+-- OnresourceStop
 AddEventHandler("onResourceStop", function(resource)
     if resource == GetCurrentResourceName() then
         for _, v in ipairs(Config.Houses) do
@@ -217,13 +211,13 @@ AddEventHandler("onResourceStop", function(resource)
     end
 end)
 
--------------------- refresh client side ---------------
+-------------------- Refresh client side ---------------
 RegisterNetEvent("vorp_housing:refreshall", function()
     loadrooms()
     loadhouses()
     TriggerServerEvent('Vorp_housing:Load')
 end)
---------------- command give near house key --------------
+--------------- Command give near house key --------------
 RegisterCommand(Config.MyKey, function()
     local playerCoords = GetEntityCoords(PlayerPedId())
 
@@ -241,7 +235,7 @@ RegisterCommand(Config.MyKey, function()
     end
 end, false)
 
---------------- command sell near house --------------
+--------------- Command sell near house --------------
 RegisterCommand(Config.SellHouse, function()
     local playerCoords = GetEntityCoords(PlayerPedId())
 
@@ -258,13 +252,12 @@ RegisterCommand(Config.SellHouse, function()
         end
     end
 end, false)
--------------------------------------- doors ------------------------------------
+-------------------------------------- Doors ------------------------------------
 
-
------------------ houses --------------
-Citizen.CreateThread(function()
+----------------- Houses --------------
+CreateThread(function()
     while true do
-        Citizen.Wait(0)
+        Wait(0)
         local sleep = true
         local playerCoords = GetEntityCoords(PlayerPedId())
         for k, v in ipairs(Config.Houses) do
@@ -285,14 +278,14 @@ Citizen.CreateThread(function()
                             end
                         end
                         if DoorSystemGetDoorState(doorID.object) ~= 1 then
-                            Citizen.CreateThread(function()
+                            CreateThread(function()
                                 Citizen.InvokeNative(0xD99229FE93B46286, doorID.object, 1, 1, 0, 0, 0, 0)
                             end)
                             local object = Citizen.InvokeNative(0xF7424890E4A094C0, doorID.object, 0)
                             Citizen.InvokeNative(0x6BAB9442830C7F53, doorID.object, doorID.locked)
                             SetEntityRotation(object, 0.0, 0.0, doorID.objYaw, 2, true)
                             if doorID.object2 ~= nil then
-                                Citizen.CreateThread(function()
+                                CreateThread(function()
                                     Citizen.InvokeNative(0xD99229FE93B46286, doorID.object2, 1, 1, 0, 0, 0, 0)
                                 end)
                                 object = Citizen.InvokeNative(0xF7424890E4A094C0, doorID.object2, 0)
@@ -302,12 +295,12 @@ Citizen.CreateThread(function()
                         end
                     else
                         if DoorSystemGetDoorState(doorID.object) ~= 0 then
-                            Citizen.CreateThread(function()
+                            CreateThread(function()
                                 Citizen.InvokeNative(0xD99229FE93B46286, doorID.object, 1, 1, 0, 0, 0, 0)
                             end)
                             Citizen.InvokeNative(0x6BAB9442830C7F53, doorID.object, doorID.locked)
                             if doorID.object2 ~= nil then
-                                Citizen.CreateThread(function()
+                                CreateThread(function()
                                     Citizen.InvokeNative(0xD99229FE93B46286, doorID.object2, 1, 1, 0, 0, 0, 0)
                                 end)
                                 Citizen.InvokeNative(0x6BAB9442830C7F53, doorID.object2, doorID.locked)
@@ -318,10 +311,10 @@ Citizen.CreateThread(function()
 
                 if distance < 2.0 then
                     sleep = false
-                    DrawText3D(doorID.objCoords.x, doorID.objCoords.y, doorID.objCoords.z + 0.2, "press alt to open door",
+                    DrawText3D(doorID.objCoords.x, doorID.objCoords.y, doorID.objCoords.z + 0.2, _U("opendoor"),
                         doorID.locked)
 
-                    if IsControlJustPressed(2, 0xE8342FF2) then -- Hold ALT
+                    if IsControlJustPressed(2, Config.OpenDoorKey) then
                         VORPcore.RpcCall("Vorp_housing:checkkey", function(result)
                             if result then
                                 TriggerEvent("Vorp_housing:changedoorhouse", k, k2)
@@ -335,14 +328,14 @@ Citizen.CreateThread(function()
             end
         end
         if sleep then
-            Citizen.Wait(1000)
+            Wait(1000)
         end
     end
 end)
 
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
-        Citizen.Wait(0)
+        Wait(0)
         local sleep = true
         local playerCoords = GetEntityCoords(PlayerPedId())
         for k, v in ipairs(Config.Houses) do
@@ -352,21 +345,21 @@ Citizen.CreateThread(function()
                 if distance < 2.0 then
                     sleep = false
                     TriggerServerEvent("Vorp_housing:Load")
-                    Citizen.Wait(10000)
+                    Wait(10000)
                 end
             end
         end
         if sleep then
-            Citizen.Wait(1000)
+            Wait(1000)
         end
     end
 end)
 
------------------------ rooms ----------------------
+----------------------- Rooms ----------------------
 
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
-        Citizen.Wait(0)
+        Wait(0)
         local sleep = true
         local playerCoords = GetEntityCoords(PlayerPedId())
         for k, v in ipairs(Config.Rooms) do
@@ -388,14 +381,14 @@ Citizen.CreateThread(function()
                             end
                         end
                         if DoorSystemGetDoorState(doorID.object) ~= 1 then
-                            Citizen.CreateThread(function()
+                            CreateThread(function()
                                 Citizen.InvokeNative(0xD99229FE93B46286, doorID.object, 1, 1, 0, 0, 0, 0)
                             end)
                             local object = Citizen.InvokeNative(0xF7424890E4A094C0, doorID.object, 0)
                             Citizen.InvokeNative(0x6BAB9442830C7F53, doorID.object, doorID.locked)
                             SetEntityRotation(object, 0.0, 0.0, doorID.objYaw, 2, true)
                             if doorID.object2 ~= nil then
-                                Citizen.CreateThread(function()
+                                CreateThread(function()
                                     Citizen.InvokeNative(0xD99229FE93B46286, doorID.object2, 1, 1, 0, 0, 0, 0)
                                 end)
                                 object = Citizen.InvokeNative(0xF7424890E4A094C0, doorID.object2, 0)
@@ -405,12 +398,12 @@ Citizen.CreateThread(function()
                         end
                     else
                         if DoorSystemGetDoorState(doorID.object) ~= 0 then
-                            Citizen.CreateThread(function()
+                            CreateThread(function()
                                 Citizen.InvokeNative(0xD99229FE93B46286, doorID.object, 1, 1, 0, 0, 0, 0)
                             end)
                             Citizen.InvokeNative(0x6BAB9442830C7F53, doorID.object, doorID.locked)
                             if doorID.object2 ~= nil then
-                                Citizen.CreateThread(function()
+                                CreateThread(function()
                                     Citizen.InvokeNative(0xD99229FE93B46286, doorID.object2, 1, 1, 0, 0, 0, 0)
                                 end)
                                 Citizen.InvokeNative(0x6BAB9442830C7F53, doorID.object2, doorID.locked)
@@ -436,14 +429,14 @@ Citizen.CreateThread(function()
             end
         end
         if sleep then
-            Citizen.Wait(1000)
+            Wait(1000)
         end
     end
 end)
 
-Citizen.CreateThread(function()
+CreateThread(function()
     while true do
-        Citizen.Wait(0)
+        Wait(0)
         local sleep = true
         local playerCoords = GetEntityCoords(PlayerPedId())
         for k, v in ipairs(Config.Rooms) do
@@ -453,12 +446,12 @@ Citizen.CreateThread(function()
                 if distance < 2.0 then
                     sleep = false
                     TriggerServerEvent("Vorp_housing:Load")
-                    Citizen.Wait(10000)
+                    Wait(10000)
                 end
             end
         end
         if sleep then
-            Citizen.Wait(1000)
+            Wait(1000)
         end
     end
 end)
@@ -504,7 +497,7 @@ function OpenDoors(entity1, coords)
         RequestAnimDict("script_common@jail_cell@unlock@key")
         while not HasAnimDictLoaded("script_common@jail_cell@unlock@key") do
             waiting = waiting + 100
-            Citizen.Wait(100)
+            Wait(100)
             if waiting > 5000 then
                 break
             end

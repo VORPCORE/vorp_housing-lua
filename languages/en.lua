@@ -1,12 +1,14 @@
 Locales["en"] = {
-	boughtroom = "You Bought This Room",
-    boughthouse = "You Bought This House",
-    notsellable = "Somone Else Bought This House !",
-    nomoney = "You Dont have enough Money",
-    buy = "BUY : ",
-    openinventory = "Inventory. Press [ENTER]",
-    havekey = "you Dont Have This House Key !",
-    sellhouse= "You Sold Your House . Receive : ",
-    dontsell = "You Cant Sell This House"
-    
+    buy = "Buy: ",
+    pressenterhouse = "Press [Enter] to Buy House",
+    pressenterroom = "Press [Enter] to Buy Room",
+	boughtroom = "You bought this room",
+    boughthouse = "You bought this house",
+    notsellable = "Somone else bought this house!",
+    nomoney = "You dont have enough money!",
+    havekey = "You dont have this house key!",
+    sellhouse= "You sold your house. Received: ",
+    dontsell = "You cant sell this house!",
+    openinventory = "Storage [Enter]",
+    opendoor = "Press [ALT] to open door"
 }
