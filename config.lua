@@ -7,12 +7,14 @@ Config.OpenDoorKey = 0xE8342FF2  -- Hold Left ALT
 Config.MyKey = "myHouseKey"      -- Command to get your house key if you lot it or give it to someones
 Config.SellHouse = "sellHouse"   -- Command sell near house
 Config.SellPrice = 0.5           -- Percent return house price when selling house. (1.0 is 100%)
+Config.OpenInventoryTextSize = 0.5
+Config.OpenInventoryTextSprite = true
 
 Config.Rooms = {
     {
-        Id        = 1, -- Must be unique
-        Name      = "Room 2A", -- Blip name 
-        key       = "hk_1", -- Must be unique
+        Id        = 1,           -- Must be unique
+        Name      = "Room 2A",   -- Blip name 
+        key       = "hk_1",      -- Must be unique
         Price     = 2000,
         text      = vector3(-322.77, 767.2, 122.0),
         Inventory = vector3(-327.3, 764.14, 121.63),
@@ -24,8 +26,8 @@ Config.Rooms = {
                 locked    = true
             }
         },
-        sell = true , -- If set false player cannot sell this house
-		MaxWeight = 100 -- Inventory slots.
+        sell = true ,     -- If set false player cannot sell this house
+		MaxWeight = 100   -- Inventory slots.
     },
     {
         Id        = 2,

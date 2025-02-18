@@ -31,7 +31,7 @@ CreateThread(function()
 
             if idistance < 2 then
                 letSleep = 0
-                DrawTxt(_U("openinventory"), 0.50, 0.90, 0.7, 0.7, true, 255, 255, 255, 255, true)
+                DrawTxt(_U("openinventory"), 0.50, 0.90, Config.OpenInventoryTextSize, Config.OpenInventoryTextSize, true, 255, 255, 255, 255, true)
                 if IsControlJustPressed(0, Config.BuyHouseKey) then
                     TriggerServerEvent("Vorp_housing:GetInventoryRooms", v.Id)
                 end
@@ -72,7 +72,7 @@ CreateThread(function()
 
             if idistance2 < 2.0 then
                 letSleep = 0
-                DrawTxt(_U("openinventory"), 0.50, 0.90, 0.7, 0.7, true, 255, 255, 255, 255, true)
+                DrawTxt(_U("openinventory"), 0.50, 0.90, Config.OpenInventoryTextSize, Config.OpenInventoryTextSize, true, 255, 255, 255, 255, true)
                 if IsControlJustPressed(0, Config.BuyHouseKey) then
                     TriggerServerEvent("Vorp_housing:GetInventoryHouses", v.Id)
                 end
@@ -116,6 +116,9 @@ function DrawTxt(str, x, y, w, h, enableShadow, col1, col2, col3, a, centre)
     if enableShadow then SetTextDropshadow(1, 0, 0, 0, 255) end
     Citizen.InvokeNative(0xADA9255D, 1);
     BgDisplayText(str, x, y)
+    if Config.OpenInventoryTextSprite then
+        DrawSprite("feeds", "toast_bg", x + 0.0050, y + 0.0170, 0.190, 0.060, 0.1, 20, 20, 20, 200, 0)
+    end
 end
 
 function DrawText3Ds(x, y, z, text)
