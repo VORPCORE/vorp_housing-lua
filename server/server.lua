@@ -7,7 +7,6 @@ TriggerEvent("getCore", function(core)
 	VORPcore = core
 end)
 
-
 -------------- Register Inventory -----------
 AddEventHandler("onResourceStart", function(resourcename)
 	if GetCurrentResourceName() ~= resourcename then
@@ -29,31 +28,29 @@ AddEventHandler("onResourceStart", function(resourcename)
 	RoomInfo  = Config.Rooms
 end)
 
--------------- load rooms ---------------
+-------------- Load Rooms ---------------
 VORPcore.addRpcCallback("Vorp_housing:getrooms", function(source, cb, args)
 	MySQL.query('SELECT * FROM rooms', {}, function(result)
 		if result[1] then
-			return cb(result) -- success
+			return cb(result) -- Success
 		else
-			return cb(nil) -- no rooms
+			return cb(nil) -- No Rooms
 		end
 	end)
 end)
 
--------- load houses ----------
+-------- Load Houses ----------
 VORPcore.addRpcCallback("Vorp_housing:gethouses", function(source, cb, args)
 	MySQL.query('SELECT * FROM housing', {}, function(result)
 		if result[1] then
-			return cb(result) -- success
+			return cb(result) -- Success
 		else
-			return cb(nil) -- no houses
+			return cb(nil) -- No Houses
 		end
 	end)
 end)
 
-
-
---------- buy house ------------
+--------- Buy House ------------
 VORPcore.addRpcCallback("Vorp_housing:buyhouse", function(source, cb, args)
 	local _source = source
 	local User = VORPcore.getUser(_source)
@@ -90,8 +87,7 @@ VORPcore.addRpcCallback("Vorp_housing:buyhouse", function(source, cb, args)
 	end
 end)
 
-
---------- buy room ------------
+--------- Buy Room ------------
 VORPcore.addRpcCallback("Vorp_housing:buyrooms", function(source, cb, args)
 	local _source = source
 	local User = VORPcore.getUser(_source)
@@ -130,10 +126,7 @@ VORPcore.addRpcCallback("Vorp_housing:buyrooms", function(source, cb, args)
 	end
 end)
 
-
-
-
----------- give key command ---------
+---------- Give Key Command ---------
 RegisterNetEvent("Vorp_housing:givekeys", function(id, key)
 	local _source = source
 	local User = VORPcore.getUser(_source)
@@ -149,7 +142,7 @@ RegisterNetEvent("Vorp_housing:givekeys", function(id, key)
 	end)
 end)
 
----------- sellhouse command ---------
+---------- Sell House Command ---------
 RegisterNetEvent("Vorp_housing:sellhouse", function(id, key)
 	local _source = source
 	local User = VORPcore.getUser(_source)
@@ -208,8 +201,7 @@ RegisterNetEvent("Vorp_housing:sellhouse", function(id, key)
 	end)
 end)
 
-
---------- open inventory rooms -------------------
+--------- Open Inventory Rooms -------------------
 RegisterNetEvent("Vorp_housing:GetInventoryRooms", function(id)
 	local _source = source
 	local User = VORPcore.getUser(_source)
@@ -224,8 +216,7 @@ RegisterNetEvent("Vorp_housing:GetInventoryRooms", function(id)
 	end)
 end)
 
-
---------- open inventory housing-------------------
+--------- Open Inventory Housing-------------------
 RegisterNetEvent("Vorp_housing:GetInventoryHouses", function(id)
 	local _source = source
 	local User = VORPcore.getUser(_source)
@@ -238,17 +229,11 @@ RegisterNetEvent("Vorp_housing:GetInventoryHouses", function(id)
 	end)
 end)
 
-
-
-
------------------------------- doors --------------------------------
-
+------------------------------ Doors --------------------------------
 RegisterNetEvent('Vorp_housing:Load', function()
 	TriggerClientEvent('Vorp_housing:setStateHouse2', -1, HouseInfo)
 	TriggerClientEvent('Vorp_housing:setStateRoom2', -1, RoomInfo)
 end)
-
-
 
 VORPcore.addRpcCallback("Vorp_housing:checkkey", function(source, cb, args)
 	local _source = source
@@ -260,14 +245,10 @@ VORPcore.addRpcCallback("Vorp_housing:checkkey", function(source, cb, args)
 	end
 end)
 
-
-
 RegisterNetEvent('Vorp_housing:updateStatehouse', function(k, k2, state)
 	HouseInfo[k].Doors[k2].locked = state
 	TriggerClientEvent('Vorp_housing:setStateHouse', -1, k, k2, state)
 end)
-
-
 
 RegisterNetEvent('Vorp_housing:updateStateroom', function(k, k2, state)
 	RoomInfo[k].Doors[k2].locked = state
