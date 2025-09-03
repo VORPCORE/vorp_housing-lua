@@ -8,17 +8,17 @@ description 'A player Housing script for VORP Core Framework'
 lua54 'yes'
 
 shared_scripts {
+	"@vorp_lib/import.lua",
 	"config.lua",
 	"locale.lua",
 	"languages/*.lua"
 }
 client_script 'client/client.lua'
 server_scripts {
-   'server/server.lua',
-   '@oxmysql/lib/MySQL.lua'
+	'server/server.lua',
+	'@oxmysql/lib/MySQL.lua'
 }
 
-repository 'https://github.com/VORPCORE/vorp_housing-lua'
 
 version '1.0'
 vorp_checker 'yes'
