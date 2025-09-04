@@ -4,15 +4,15 @@ local Blips = Lib.Blips --[[@as MAP]]
 local rooms = {}
 local houses = {}
 
-local function checknotexist(id, table)
-    local notexistt = true
-    for _, v in ipairs(table) do
+local function idNotExists(id, tbl)
+    for _, v in ipairs(tbl) do
         if v.id == id then
-            notexistt = false
+            return false
         end
     end
-    return notexistt
+    return true
 end
+
 
 local function loadrooms()
     LIB.CORE.RpcCall("Vorp_housing:getrooms", function(result)
@@ -139,7 +139,7 @@ CreateThread(function()
                 letSleep = 0
                 local message = ""
                 local canbuy2 = false
-                if checknotexist(v.Id, rooms) then
+                if idNotExists(v.Id, rooms) then
                     message = _U("buy") .. v.Price .. "$\n" .. _U("pressenterroom")
                     args = v
                     canbuy2 = true
@@ -181,7 +181,7 @@ CreateThread(function()
                 letSleep = 0
                 local message = ""
                 local canbuy = false
-                if checknotexist(v.Id, houses) then
+                if idNotExists(v.Id, houses) then
                     message = _U("buy") .. v.Price .. "$\n" .. _U("pressenterhouse")
                     args = v
                     canbuy = true
